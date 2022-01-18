@@ -9,12 +9,15 @@ import login from "./routes/Auth/login";
 import UserModel from "./Database/models/UserModel";
 import createMultipleUsers from "./Database/controllers/createMultipleUsers";
 
-let testUserNames = ["Tom", "Linn", "Ralf", "Silke", "Peter"];
-let testUsers: User[] = testUserNames.map((e) => {
+require("dotenv").config();
+import cors from "cors"
+
+let testUserNames = ["Paul", "Peter", "Augustine", "Jonas", "Justus"];
+let testUsers: User[] = testUserNames.map((e, i) => {
   return {
-    userId: 0,
+    userId: i,
     name: e,
-    email: e.toLowerCase() + "@offermann.name",
+    email: e.toLowerCase() + "@gmail.com",
     password: "1234",
   };
 });
@@ -33,6 +36,10 @@ testAsync();
 
 const app = require("express")();
 
+app.use(cors({
+  origin: "http://localhost:3000"
+}))
+
 app.use("/login", login);
 
 app.use("/api?:token", verifyToken);
@@ -41,6 +48,6 @@ app.use("/api/users", users);
 app.use("/api/games", games);
 app.use("/api/bets", bets);
 
-app.listen(3000, () => {
-  console.log("App listening on port 3000");
+app.listen(process.env.PORT ?? 4000, () => {
+  console.log(`App listening on port ${process.env.PORT ?? 4000}`);
 });

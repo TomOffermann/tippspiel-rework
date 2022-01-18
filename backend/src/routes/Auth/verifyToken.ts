@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { green, magenta, red } from "colors";
+import { blue, green, magenta, red } from "colors";
 import jwt from "jsonwebtoken";
 
 let processApiCalls = 0;
@@ -31,7 +31,6 @@ export default function authenticateToken(
     );
     return res.sendStatus(401);
   }
-
   jwt.verify(token, process.env.JWT_SECRET as string, (err: any, user: any) => {
     if (err) {
       console.log(err);
