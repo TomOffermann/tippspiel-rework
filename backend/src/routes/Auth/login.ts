@@ -1,25 +1,40 @@
 import { Request, Response, Router } from "express";
 import UserModel from "../../Database/models/UserModel";
 import Auth from "../../Auth/authFunctions";
+import authenticateToken from "./authenticateToken";
+import { LogAuthRequest } from "../../Log/RequestRecords";
 
 const login = Router();
 
-login.get("/", async (req: Request, res: Response) => {
-  const name = req?.query?.name?.toString() ?? "";
-  const password = req?.query?.password?.toString() ?? "";
+login.post("/", async (req: Request, res: Response) => {
+  const name = req?.body?.name?.toString() ?? "";
+  const password = req?.body?.password?.toString() ?? "";
 
-  const user: User = await UserModel.findOne({ name: name });
-  if (user && name !== "" && password !== "") {
-    if (Auth.comparePlainHash(password, user.password ?? "")) {
-      res.status(200).json({
-        token: await Auth.generateToken(user?.name ?? "", user?._id ?? ""),
-      });
+  if (name !== "" && password !== "") {
+    const user: User = await UserModel.findOne({ name: name });
+    if (user) {
+      if (Auth.comparePlainHash(password, user.password ?? "")) {
+        LogAuthRequest(true);
+        res.status(200).json({
+          token: await Auth.generateToken(user?.name ?? "", user?._id ?? ""),
+        });
+      } else {
+        LogAuthRequest(false);
+        res.sendStatus(403);
+      }
     } else {
-      res.sendStatus(404);
+      LogAuthRequest(false);
+      res.sendStatus(403);
     }
   } else {
-    res.sendStatus(404);
+    res.sendStatus(400);
   }
+});
+
+login.use("/", authenticateToken);
+
+login.get("/", async (req: Request, res: Response) => {
+  res.sendStatus(200);
 });
 
 export default login;

@@ -1,5 +1,5 @@
 function Loader() {
-  return <div className="text-xs bg-yellow-300">Hello World</div>;
+  return <div className=""></div>;
 }
 
 export default Loader;

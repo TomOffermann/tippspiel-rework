@@ -12,7 +12,7 @@ ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <App />
-      <ReactQueryDevtools position="bottom-right"/>
+      <ReactQueryDevtools/>
     </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root")

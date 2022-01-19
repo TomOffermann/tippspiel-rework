@@ -3,14 +3,15 @@ import bets from "./routes/BetsRoute";
 import games from "./routes/GamesRoute";
 
 import Auth from "./Auth/authFunctions";
-import verifyToken from "./routes/Auth/verifyToken";
+import authenticateToken from "./routes/Auth/authenticateToken";
 import { green } from "colors";
 import login from "./routes/Auth/login";
 import UserModel from "./Database/models/UserModel";
 import createMultipleUsers from "./Database/controllers/createMultipleUsers";
 
+import express, { Request, Response, NextFunction } from "express";
 require("dotenv").config();
-import cors from "cors"
+import cors from "cors";
 
 let testUserNames = ["Paul", "Peter", "Augustine", "Jonas", "Justus"];
 let testUsers: User[] = testUserNames.map((e, i) => {
@@ -36,13 +37,23 @@ testAsync();
 
 const app = require("express")();
 
-app.use(cors({
-  origin: "http://localhost:3000"
-}))
+app.use(
+  express.urlencoded({
+    extended: true
+  })
+)
+
+app.use(express.json())
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 
 app.use("/login", login);
 
-app.use("/api?:token", verifyToken);
+app.use("/api?:token", authenticateToken);
 
 app.use("/api/users", users);
 app.use("/api/games", games);

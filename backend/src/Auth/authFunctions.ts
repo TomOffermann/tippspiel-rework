@@ -20,7 +20,7 @@ async function generateToken(username: string, userId: string) {
     { name: username, userId: userId },
     process.env.JWT_SECRET ?? "",
     {
-      expiresIn: 60 * 30,
+      expiresIn: 60 * 60 * 24,
     }
   );
 }
