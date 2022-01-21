@@ -13,7 +13,7 @@ interface loginData {
   password: string;
 }
 
-interface loginStatus {
+export interface loginStatus {
   status: number;
   error: boolean;
   message: string;

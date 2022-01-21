@@ -1,5 +1,5 @@
-function Loader() {
-  return <div className=""></div>;
+function Loader({ props }: any) {
+  return <div className="">aeöiusiluhf</div>;
 }
 
 export default Loader;

@@ -3,7 +3,7 @@ import config from "../config";
 
 export default async function getUser() {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVG9tIiwidXNlcklkIjoiNjFlMTk0MjhiNGE0NjhhZDIyOTQ1MzkzIiwiaWF0IjoxNjQyNTMyNzExLCJleHAiOjE2NDI2MTkxMTF9.FJa4KNporCuEPt-VaB_PPBb0F1v2hXAVNY_puMQLwQI";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiVG9tIiwidXNlcklkIjoiNjFlMTk0MjhiNGE0NjhhZDIyOTQ1MzkzIiwiaWF0IjoxNjQyNzYwNDg3LCJleHAiOjE2NDI4NDY4ODd9.Qnnil5K2YQpFiIe0irPWaOUMQTRJWQ6ew4oEmplhDgU";
   return axios.get(config.baseUrl + "/api/users", {
     headers: { Authorization: "Bearer " + token },
   });
